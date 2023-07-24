@@ -5,6 +5,7 @@ import { UtilsService } from '../services/utils.Service';
 import { isNil } from 'lodash';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { defaultQuiz } from '../schema/quiz';
 
 @Component({
   selector: 'app-question',
@@ -20,13 +21,21 @@ export class QuestionComponent implements OnInit {
   quizTotalTime = 0;
 
   constructor(private readonly utilsService: UtilsService, private readonly router: Router) {
-    const quiz = this.utilsService.getQiz();
-    const myQuiz = this.utilsService.getMyQuiz();
+    let quiz = this.utilsService.getQiz();
+    let myQuiz = this.utilsService.getMyQuiz();
     if (!isNil(quiz)) {
       if (!isNil(myQuiz)) {
         this.quiz = myQuiz;
       } else {
         this.utilsService.updateMyQuiz(quiz);
+      }
+    } else {
+      this.utilsService.updateQuiz(defaultQuiz);
+      quiz = this.utilsService.getQiz();
+      if (quiz) {
+        this.utilsService.updateMyQuiz(quiz);
+        myQuiz = this.utilsService.getMyQuiz();
+        if (myQuiz) this.quiz = myQuiz;
       }
     }
   }
