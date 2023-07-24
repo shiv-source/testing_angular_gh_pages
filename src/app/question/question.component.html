@@ -1,0 +1,53 @@
+<div class="flex justify-center pt-20 w-screen min-h-screen bg-gray-900 text-gray-300">
+  <div class="question w-8/12 p-5">
+    <ng-container *ngIf="currentQuestion; else elseBlock">
+      <div class="title">
+        <p class="text-3xl">{{ questionNumber }}. {{ currentQuestion.questionText }}</p>
+      </div>
+      <div class="options pt-20 text-lg">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col" *ngFor="let option of currentQuestion.options">
+            <div class="flex items-center mb-4" *ngIf="currentQuestion">
+              <input
+                [checked]="option.value === currentQuestion.answer"
+                [id]="option.value"
+                type="radio"
+                [value]="option.value"
+                (change)="selectOption(currentQuestion, option.value, currentQuestionIndex)"
+                name="option"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+              />
+              <label [for]="option.value" class="ml-2 font-medium">{{ option.value }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full pt-32">
+        <div class="flex justify-center gap-8">
+          <button
+            *ngIf="currentQuestion"
+            class="rounded-full py-2 px-5 text-white w-40 bg-orange-600"
+            (click)="previousQuestion(currentQuestionIndex)"
+          >
+            Previous
+          </button>
+          <button
+            class="rounded-full py-2 px-5 text-white w-40 bg-orange-600"
+            (click)="nextQuestion(currentQuestionIndex)"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="sumit absolute bottom-5 right-5">
+  <button class="rounded-full bg-emerald-800 py-2 px-5 text-white w-40" (click)="onSubmit()">Submit Quiz</button>
+</div>
+
+<ng-template #elseBlock>
+  <div class="loader h-40 flex justify-center items-center">
+    <img class="w-16 h-16" src="../../assets/loader.gif" />
+  </div>
+</ng-template>
