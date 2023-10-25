@@ -26,14 +26,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-      - run: yarn install
-      - run: yarn build:prod
+      - name: Installing project dependencies
+        run: yarn install
+      - name: Building project
+        run: yarn build:prod
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/my-angular-app
+          publish_dir: dist/my-angular-app
       - name: Deploy url
-        run: https://shiv-source.github.io/testing_angular_gh_pages/
-        #run: https://${{ github.event.repository.name }}.github.io/${{ github.repository_owner }}
-        #  https://testing_angular_gh_pages.github.io/shiv-source
+        run: echo https://{{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
