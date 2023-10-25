@@ -31,7 +31,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/my-angular-app
+          publish_dir: dist/my-angular-app
       - name: Deploy url
         run: https://shiv-source.github.io/testing_angular_gh_pages/
         #run: https://${{ github.event.repository.name }}.github.io/${{ github.repository_owner }}
