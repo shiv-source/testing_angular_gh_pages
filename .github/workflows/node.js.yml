@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+    - uses: c-hive/gha-yarn-cache@v2
     - run: yarn install
     - run: yarn build:prod
     - name: Deploy
@@ -32,7 +33,7 @@ jobs:
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: dist/my-angular-app
+        FOLDER: dist/my-angular-app/
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         MESSAGE: "Build: ({sha}) {msg}"
     - name: Deploy url
